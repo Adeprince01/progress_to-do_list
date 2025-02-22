@@ -19,33 +19,79 @@ const checklistData = [
       { text: "Applied for loan or grant (if applicable)", completed: false, notes: "" },
     ],
   },
-  // Add remaining steps similarly (shortened for brevity; full version in GitHub link)
+  {
+    title: "Set Up Legal and Safety Basics",
+    subtasks: [
+      { text: "Obtained insurance (note provider and cost)", completed: false, notes: "" },
+      { text: "Reviewed COSHH basics", completed: false, notes: "" },
+      { text: "Contacted council / Confirmed waste plan", completed: false, notes: "" },
+    ],
+  },
+  {
+    title: "Build Your Marketing Foundation",
+    subtasks: [
+      { text: "Website live", completed: false, notes: "" },
+      { text: "Profiles created (social media)", completed: false, notes: "" },
+      { text: "First ad launched", completed: false, notes: "" },
+      { text: "Flyers distributed", completed: false, notes: "" },
+      { text: "Joined local business group", completed: false, notes: "" },
+    ],
+  },
+  {
+    title: "Launch Operations Part-Time",
+    subtasks: [
+      { text: "Secured first client", completed: false, notes: "" },
+      { text: "Set up booking system", completed: false, notes: "" },
+      { text: "First job completed", completed: false, notes: "" },
+      { text: "Feedback received", completed: false, notes: "" },
+    ],
+  },
+  {
+    title: "Monitor and Scale",
+    subtasks: [
+      { text: "Reinvested £___ into ___ (e.g., new vacuum)", completed: false, notes: "" },
+      { text: "Hired first staff", completed: false, notes: "" },
+      { text: "Insurance updated", completed: false, notes: "" },
+      { text: "Secured first contract", completed: false, notes: "" },
+    ],
+  },
+  {
+    title: "Research Competition and Refine",
+    subtasks: [
+      { text: "Competition researched", completed: false, notes: "" },
+      { text: "Defined unique edge (e.g., eco-friendly)", completed: false, notes: "" },
+      { text: "Updated offerings", completed: false, notes: "" },
+    ],
+  },
+  {
+    title: "Expand Toward Your Vision",
+    subtasks: [
+      { text: "First Manchester client", completed: false, notes: "" },
+      { text: "Locked in first long-term deal", completed: false, notes: "" },
+    ],
+  },
 ];
 
 function App() {
   const [checklist, setChecklist] = useState(checklistData);
   const [expanded, setExpanded] = useState({});
 
-  // Load saved data from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('cleaningChecklist');
     if (saved) setChecklist(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage whenever checklist changes
   useEffect(() => {
     localStorage.setItem('cleaningChecklist', JSON.stringify(checklist));
   }, [checklist]);
 
-  // Calculate total tasks and completed tasks for progress
-  const totalTasks = checklist.reduce((sum, step) => sum + step.subtasks.length, 0);
+  const totalTasks = checklist.reduce((sum, step) => sum + (step.subtasks?.length || 0), 0);
   const completedTasks = checklist.reduce(
-    (sum, step) => sum + step.subtasks.filter((sub) => sub.completed).length,
+    (sum, step) => sum + (step.subtasks?.filter((sub) => sub.completed).length || 0),
     0
   );
-  const progress = Math.round((completedTasks / totalTasks) * 100);
+  const progress = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
-  // Toggle task completion
   const toggleTask = (stepIdx, subIdx) => {
     const newChecklist = [...checklist];
     const subtask = newChecklist[stepIdx].subtasks[subIdx];
@@ -54,19 +100,16 @@ function App() {
     setChecklist(newChecklist);
   };
 
-  // Update notes
   const updateNotes = (stepIdx, subIdx, value) => {
     const newChecklist = [...checklist];
     newChecklist[stepIdx].subtasks[subIdx].notes = value;
     setChecklist(newChecklist);
   };
 
-  // Toggle step expansion
   const toggleExpand = (stepIdx) => {
     setExpanded((prev) => ({ ...prev, [stepIdx]: !prev[stepIdx] }));
   };
 
-  // Reset progress
   const resetProgress = () => {
     setChecklist(checklistData);
     localStorage.setItem('cleaningChecklist', JSON.stringify(checklistData));
@@ -88,7 +131,7 @@ function App() {
             <h2 onClick={() => toggleExpand(stepIdx)}>
               {step.title} {expanded[stepIdx] ? "▲" : "▼"}
             </h2>
-            {expanded[stepIdx] && (
+            {expanded[stepIdx] && step.subtasks && (
               <ul>
                 {step.subtasks.map((subtask, subIdx) => (
                   <li key={subIdx} className={subtask.completed ? "completed" : ""}>
