@@ -1,0 +1,107 @@
+.app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .progress-bar {
+    background: #ddd;
+    height: 20px;
+    border-radius: 10px;
+    margin: 10px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .progress-bar div {
+    background: #4caf50;
+    height: 100%;
+    transition: width 0.3s;
+  }
+  
+  .progress-bar span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  button {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #d32f2f;
+  }
+  
+  .step {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  h2 {
+    background: #f5f5f5;
+    padding: 10px;
+    margin: 0;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+  }
+  
+  li.completed {
+    color: #4caf50;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  details {
+    margin-left: 20px;
+  }
+  
+  textarea {
+    width: 100%;
+    max-width: 300px;
+    min-height: 50px;
+    margin-top: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    .app {
+      padding: 10px;
+    }
+    h1 {
+      font-size: 20px;
+    }
+  }
