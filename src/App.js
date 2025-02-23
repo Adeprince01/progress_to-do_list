@@ -73,8 +73,16 @@ const checklistData = [
 ];
 
 function App() {
-  const [checklist, setChecklist] = useState(checklistData);
+  const [projects, setProjects] = useState(() => {
+    const saved = localStorage.getItem('projects');
+    return saved ? JSON.parse(saved) : [{ name: "Macclesfield Cleaning Business Tracker", checklist: checklistData }];
+  });
+  const [currentProjectIdx, setCurrentProjectIdx] = useState(0);
+  const [projectName, setProjectName] = useState(projects[currentProjectIdx].name);
+  const [newStep, setNewStep] = useState({ title: "", subtasks: [{ text: "", completed: false, notes: "", dateCompleted: null }] });
   const [expanded, setExpanded] = useState({});
+
+  const [checklist, setChecklist] = useState(checklistData);
 
   useEffect(() => {
     const saved = localStorage.getItem('cleaningChecklist');
