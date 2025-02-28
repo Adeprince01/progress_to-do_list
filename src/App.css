@@ -20,7 +20,7 @@
   
   /* Text */
   --text: #1e293b;
-  --text-light: #64748b;
+  --text-light: #475569; /* Slightly darker slate for better contrast */
   --text-lightest: #94a3b8;
   --text-on-primary: #ffffff;
   
@@ -33,8 +33,8 @@
   --priority-high-bg: #fee2e2;
   --priority-medium: #f59e0b;
   --priority-medium-bg: #fef3c7;
-  --priority-low: #10b981;
-  --priority-low-bg: #d1fae5;
+  --priority-low: #4aa7f3;
+  --priority-low-bg: #b1caf1;
   
   /* Effects */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -91,6 +91,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--spacing-8) var(--spacing-4);
+  background: linear-gradient(135deg, var(--background) 0%, #f0f8ff 100%); /* Soft blue tint */
 }
 
 /* App Header */
@@ -106,6 +107,12 @@ body {
   font-weight: 700;
   color: var(--primary);
   margin: 0;
+}
+
+.app-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  margin-top: var(--spacing-1);
 }
 
 .view-controls {
@@ -230,6 +237,7 @@ h3 {
   position: relative;
   overflow: hidden;
   margin-bottom: var(--spacing-2);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle depth */
 }
 
 .progress-bar div {
@@ -244,6 +252,7 @@ h3 {
   font-size: 0.875rem;
   min-width: 2rem;
   padding: 0 var(--spacing-3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight elevation */
 }
 
 .progress-bar span.details {
@@ -579,6 +588,7 @@ form button {
   user-select: none;
   border-bottom: 1px solid var(--border);
   transition: background-color var(--transition-fast);
+  padding: var(--spacing-3) var(--spacing-4);
 }
 
 .step-header:hover {
@@ -593,6 +603,7 @@ form button {
   font-size: 1.125rem;
   color: var(--text);
   flex: 1;
+  font-size: 1rem; /* Slightly smaller for better fit */
 }
 
 .step-header .expand-icon {
@@ -618,6 +629,7 @@ form button {
   transition: all var(--transition-fast);
   min-width: auto;
   box-shadow: none;
+  
 }
 
 .icon-button:hover {
@@ -666,7 +678,7 @@ form button {
 
 /* Subtasks */
 .subtask {
-  padding: var(--spacing-4) var(--spacing-6);
+  padding: var(--spacing-2) var(--spacing-3);
   border-bottom: 1px solid var(--border);
   transition: background-color var(--transition-fast);
 }
@@ -699,6 +711,53 @@ form button {
   flex: 1;
   min-width: 0;
 }
+
+
+
+.subtask.completed.priority-high,
+.subtask.completed.priority-medium,
+.subtask.completed.priority-low {
+  opacity: 0.7; /* Slightly faded when completed */
+}
+
+.subtask.has-notes details summary::after {
+  content: "📝";
+  font-size: 0.875rem;
+  margin-left: var(--spacing-2);
+  color: var(--text-light);
+  transition: color var(--transition-fast);
+}
+
+
+.subtask.has-notes:hover .checkbox-label::after {
+  color: var(--primary);
+}
+
+/* New contained notes preview */
+.subtask.has-notes .editable-text {
+  position: relative; /* Anchor for the preview */
+}
+
+/* below the text but above the notes button*'/
+.subtask.has-notes .editable-text:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: calc(100% + var(--spacing-2)); /* Below the text *'/
+  left: 0;
+  width: 100%;
+  max-width: 300px;
+  padding: var(--spacing-2) var(--spacing-3);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+  white-space: normal;
+  word-break: break-word;
+  animation: fadeIn var(--transition-fast);
+} */
 
 .subtask input[type="checkbox"] {
   width: 1.25rem;
@@ -746,7 +805,7 @@ form button {
 
 .editable-text {
   position: relative;
-  font-size: 1rem;
+  font-size: 0.9375rem; /* Between 0.875rem and 1rem for readability */
   color: var(--text);
   transition: all var(--transition-fast);
   padding: var(--spacing-1) var(--spacing-2);
@@ -754,6 +813,8 @@ form button {
   word-break: break-word;
   flex: 1;
 }
+
+
 
 .editable-text.editing {
   outline: none;
@@ -997,6 +1058,7 @@ textarea:focus {
   left: 50%;
   transform: translateX(-50%);
   background-color: var(--text);
+  /* background-color: var(--success); /* Green for positive feedback */
   color: white;
   padding: var(--spacing-3) var(--spacing-6);
   border-radius: var(--radius-full);
@@ -1015,6 +1077,10 @@ textarea:focus {
   to {
     opacity: 1;
   }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
 }
 
 @keyframes slideUp {
@@ -1113,7 +1179,7 @@ textarea:focus {
   }
   
   .step-header h3 {
-    font-size: 1rem;
+    font-size: 0.9375rem; /* Between 0.875rem and 1rem for readability */
   }
   
   .subtask {

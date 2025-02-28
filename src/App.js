@@ -85,7 +85,7 @@ function App() {
     const saved = localStorage.getItem('projects');
     return saved ? JSON.parse(saved) : [{
       id: "project-1", 
-      name: "Macclesfield Cleaning Business Tracker", 
+      name: "Cleaning Business Tracker", 
       checklist: checklistData
     }];
   });
@@ -147,7 +147,7 @@ function App() {
         // Fallback to default project
         setProjects([{
           id: "project-1", 
-          name: "Macclesfield Cleaning Business Tracker", 
+          name: "Cleaning Business Tracker", 
           checklist: checklistData
         }]);
       }
@@ -567,7 +567,8 @@ function App() {
     <div className="app">
       <header>
         <div className="app-header">
-          <h1 className="app-title">Progress Tracker</h1>
+          <h1 className="app-title">My Progress Tracker</h1>
+          <p className="app-subtitle">Track all your Goals in one place</p>
           <div className="view-controls">
             <button onClick={expandAll} className="icon-button">
               <span role="img" aria-label="Expand All">🔽</span> Expand All
@@ -885,6 +886,7 @@ function App() {
                         subtask 
                         ${subtask.completed ? "completed" : ""} 
                         priority-${subtask.priority}
+                        ${subtask.notes.trim() ? "has-notes" : ""}
                       `}
                       id={`subtask-${stepIdx}-${subIdx}`}
                     >
@@ -910,10 +912,9 @@ function App() {
                                   newProjects[currentProjectIdx].checklist[stepIdx].subtasks[subIdx].text = e.target.textContent;
                                   setProjects(newProjects);
                                 } else {
-                                  // Remove empty subtask
                                   deleteSubtask(stepIdx, subIdx);
                                 }
-                                setEditMode(null);
+                                setEditMode(null);                
                               }}
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
@@ -930,6 +931,7 @@ function App() {
                                 }
                               }}
                               suppressContentEditableWarning={true}
+                              title={subtask.notes.trim() ? subtask.notes : ""} // For accessibility
                             >
                               {subtask.text}
                             </span>
